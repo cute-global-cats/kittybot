@@ -13,20 +13,17 @@ app.listen(process.env.PORT);
 setInterval(() => {
   http.get(`http://${process.env.PROJECT_DOMAIN}.glitch.me/`);
 }, 280000);
+
+
 const Discord = require("discord.js");
 const client = new Discord.Client();
 const config = require("./config.json");
-const SQLite = require("better-sqlite3");
-const animals = require('random-animals-api'); 
-const sql = new SQLite('./scores.sqlite');
+const animals = require('random-animals-api');
 const got = require("got")
 const newUsers = new Discord.Collection();
  
 client.on("ready", () => {
-  // Check if the table "points" exists.
   console.log(`Bot has started, with ${client.users.size} users, in ${client.channels.size} channels of ${client.guilds.size} guilds.`); 
-  // Example of changing the bot's playing game to something useful. `client.user` is what the
-  // docs refer to as the "ClientUser".
   client.user.setPresence({ game: { name: 'beautiful people', type: "WATCHING" }, status: 'online' })
   // List servers the bot is connected to
     console.log("Servers:")
@@ -40,15 +37,16 @@ client.on("ready", () => {
 client.on("message", async message => {
   console.log(message.author.tag + " sent this: (" + message.content + ") in " + message.guild + "'s channel #" + message.channel.name + "(" + message.channel.id + ")");
   if (message.author.bot) return;
+  
   if(message.guild === null){
     client.channels.get("572458414878228486").send(message.author.tag + " said this in a DM to me: \n```\n" + message.content + "\n```");
     console.log(message.author.tag + " said this in a DM to me: \n```\n" + message.content + "\n```");
   };
+  
+  
   if (message.content.indexOf(config.prefix) !== 0) return;
   const args = message.content.slice(config.prefix.length).trim().split(/ +/g);
   const command = args.shift().toLowerCase();
-  
-  
   
   
   if(command === "help") {
@@ -61,7 +59,7 @@ client.on("message", async message => {
     .addField(config.prefix + "animals", "See what animals you can get pictures of", true)
     .addField(config.prefix + "meme", "Get yourself a good meme", true)
     .addField(config.prefix + "restart", "Restart the bot")
-    .setFooter("More Commands coming soon!")
+    .setFooter("More Commands coming soon! Contribute at https://github.com/thewilloftheshadow/kittybot")
     message.channel.send({embed});
   }
   
@@ -69,12 +67,8 @@ client.on("message", async message => {
     if(message.author.id === config.ownerID){
     message.delete().catch(O_o=>{});
     message.channel.startTyping();
-    // makes the bot say something and delete the message. As an example, it's open to anyone to use. 
-    // To get the "message" itself we join the `args` back into a string with spaces: 
     const sayMessage = args.join(" ");
-    // Then we delete the command message (sneaky, right?). The catch just ignores the error with a cute smiley thing.
     message.delete().catch(O_o=>{}); 
-    // And we get the bot to say the thing: 
     message.channel.send(sayMessage);
     message.channel.stopTyping();
     }
@@ -86,6 +80,7 @@ client.on("message", async message => {
     const m = await message.channel.send("Ping?");
     m.edit(`Pong! :ping_pong: Latency is ${m.createdTimestamp - message.createdTimestamp}ms. API Latency is ${Math.round(client.ping)}ms`);
   }
+  
   if(command === "restart"){
     resetBot(message.channel);
   }
@@ -235,6 +230,7 @@ client.on("message", async message => {
     message.channel.send(embed)
     })
   }
+  
   if(command === "animals"){
     message.channel.send("This bot contains pictures for these animals:\n```\ncat, fox, bird, dog, bunny, lizard, owl, tiger, shiba, lion, duck, panda, and penguin\n```")
   }
@@ -258,7 +254,6 @@ client.on("message", async message => {
             .then(sent => console.log(`Sent a reply to ${sent.author.username}`))
         console.log('Bot responded with: ' + memeImage);
     }).catch(console.error);
-    
   }
   
   if (command === "eval") {
