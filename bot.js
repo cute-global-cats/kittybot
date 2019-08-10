@@ -257,7 +257,7 @@ client.on("message", async message => {
   }
   
   if (command === "eval") {
-    if(message.author.id !== config.ownerID) 
+    if(config.eval.some(user => user === message.author.id) === false)
       return message.reply(":warning: You don't have permission to use that command! :warning:")
     try {
       const code = args.join(" ");
