@@ -2,6 +2,7 @@
 const http = require('http');
 const express = require('express');
 const app = express();
+const cmd = require('node-cmd')
 /*global Set, Map*/
 app.use(express.static('public'));
 
@@ -9,6 +10,40 @@ app.get("/", (request, response) => {
   console.log(Date.now() + " Ping Received");
   response.sendFile(__dirname + '/index.html');
 });
+app.post('/git', (req, res) => {
+  let hmac = crypto.createHmac('sha1', SECRET)
+  let sig = 'sha1=' + hmac.update(JSON.stringify(req.body)).digest('hex')
+  
+  // If event is "push" and secret matches config.SECRET
+  if (
+    req.headers['x-github-event'] == 'push' &&
+    sig == req.headers['x-hub-signature']
+  ) {
+    cmd.run('chmod 777 ./git.sh') // :/ Fix no perms after updating
+    cmd.get('./git.sh', (err, data) => {
+      if (data) log.info(data)
+      if (err) log.error(err)
+    })
+    
+    let commits =
+        req.body.head_commit.message.split('\n').length == 1
+          ? req.body.head_commit.message
+          : req.body.head_commit.message
+            .split('\n')
+            .map((el, i) => (i !== 0 ? '                       ' + el : el))
+            .join('\n')
+    console.log(
+      '\n\n [GIT] Updated with origin/master\n' +
+      `        Latest commit: ${commits}`
+    )
+    
+    cmd.get('refresh', err => {
+      if (err) log.error(err)
+    })
+    
+    return res.sendStatus(200)
+  } else return res.sendStatus(400)
+})
 app.listen(process.env.PORT);
 setInterval(() => {
   http.get(`http://${process.env.PROJECT_DOMAIN}.glitch.me/`);
