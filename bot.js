@@ -12,7 +12,7 @@ app.get("/", (request, response) => {
   response.sendFile(__dirname + '/index.html');
 });
 app.post('/git', (req, res) => {
-  let hmac = crypto.createHmac('sha1', SECRET)
+  let hmac = crypto.createHmac('sha1', process.env.SECRET)
   let sig = 'sha1=' + hmac.update(JSON.stringify(req.body)).digest('hex')
   
   // If event is "push" and secret matches config.SECRET
