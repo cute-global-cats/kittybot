@@ -1,6 +1,6 @@
 {
   "name": "kittybot",
-  "version": "0.0.1",
+  "version": "0.1.1",
   "description": "Discord bot for the CGC BoxBot Clan",
   "main": "bot.js",
   "scripts": {
@@ -12,7 +12,8 @@
     "express": "^4.16.4",
     "sqlite3": "^4.0.8",
     "random-animals-api": "^1.2.0",
-    "got": "^9.6.0"
+    "got": "^9.6.0",
+    "node-cmd": "^3.0.0"
   },
   "engines": {
     "node": "8.x"
