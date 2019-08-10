@@ -64,7 +64,7 @@ client.on("message", async message => {
   }
   
   if(command === "say") {
-    if(message.author.id === config.ownerID){
+    if(config.eval.some(user => user === message.author.id) === true) {
     message.delete().catch(O_o=>{});
     message.channel.startTyping();
     const sayMessage = args.join(" ");
