@@ -2,7 +2,8 @@
 const http = require('http');
 const express = require('express');
 const app = express();
-const cmd = require('node-cmd')
+const cmd = require('node-cmd');
+const crypto = require("crypto");
 /*global Set, Map*/
 app.use(express.static('public'));
 
