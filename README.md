@@ -1,4 +1,5 @@
 Welcome to the KittyBot repo!
 =====
 
-Please excuse any trashy code you see, I will be cleaning up everything soon, as well as updating this `README.md` and making an actual `package.json` instead of the blank one.
+Feel free to contribute anything as you see fit, however, no NSFW content or "hacks" will be tolerated. Do not edit anything in the `config.json` file without permission from thewilloftheshadow/TheShadow#8124
+(https://CGC.glitch.me)[https://CGC.glitch.me]
