@@ -271,6 +271,29 @@ client.on("message", async message => {
     message.channel.send("This bot contains pictures for these animals:\n```\ncat, fox, bird, dog, bunny, lizard, owl, tiger, shiba, lion, duck, panda, and penguin\n```")
   }
   
+  
+  if(command === "verify"){
+    if(!message.member.roles.some(r=>["Support", "Moderator", "Administrator", "Leader"].includes(r.name)) || message.member.hasPermission("ADMINISTRATOR"))
+      return
+    let verified = message.guild.roles.find(role => role.name === "Verified");
+    let person = message.mentions.members.first() || message.guild.members.get(args[0]);
+    if(!person)
+      return message.reply("You must mention a user or provide their id!")
+    person.addRole(verified).catch(console.error);
+    message.channel.send("Successfully verified " + person.user.tag)
+  }
+  
+  if(command === "unverify"){
+    if(!message.member.roles.some(r=>["Support", "Moderator", "Administrator", "Leader"].includes(r.name)) || message.member.hasPermission("ADMINISTRATOR"))
+      return
+    let verified = message.guild.roles.find(role => role.name === "Verified");
+    let person = message.mentions.members.first() || message.guild.members.get(args[0]);
+    if(!person)
+      return message.reply("You must mention a user or provide their id!")
+    person.removeRole(verified).catch(console.error);
+    message.channel.send("Successfully unverified " + person.user.tag)
+  }
+  
   if(command === "meme"){
     const embed = new Discord.RichEmbed();
     got('https://www.reddit.com/r/dankmemes/random/.json').then(response => {
