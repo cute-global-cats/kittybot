@@ -95,7 +95,7 @@ client.on("message", async message => {
     .addField(config.prefix + "animals", "See what animals you can get pictures of", true)
     .addField(config.prefix + "meme", "Get yourself a good meme", true)
     .addField(config.prefix + "restart", "Restart the bot")
-    .setFooter("More Commands coming soon! Contribute at https://github.com/thewilloftheshadow/kittybot")
+    .setFooter("More Commands coming soon! Contribute at https://github.com/cute-global-cats/kittybot")
     message.channel.send({embed});
   }
   
