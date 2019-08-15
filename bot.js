@@ -105,7 +105,7 @@ client.on("message", async message => {
     let amountToPurge = parseInt(args[0])
     if (isNaN(amountToPurge)) { message.channel.send(`${args[0]} is not a number! Try again.`); return }
     message.delete().catch(O_o=>{});
-    channel.bulkDelete(amountToPurge)
+    message.channel.bulkDelete(amountToPurge)
       .then(messages => console.log(`Bulk deleted ${messages.size} messages`))
       .catch(console.error);
   }
