@@ -14,7 +14,7 @@ app.get("/", (request, response) => {
 app.post('/git', (req, res) => {
   let hmac = crypto.createHmac('sha1', process.env.SECRET)
   let sig = 'sha1=' + hmac.update(JSON.stringify(req.body)).digest('hex')
-  
+
   // If event is "push" and secret matches config.SECRET
   if (
     req.headers['x-github-event'] == 'push' &&
@@ -25,7 +25,7 @@ app.post('/git', (req, res) => {
       if (data) log.info(data)
       if (err) log.error(err)
     })
-    
+
     let commits =
         req.body.head_commit.message.split('\n').length == 1
           ? req.body.head_commit.message
@@ -37,11 +37,11 @@ app.post('/git', (req, res) => {
       '\n\n [GIT] Updated with origin/master\n' +
       `        Latest commit: ${commits}`
     )
-    
+
     cmd.get('refresh', err => {
       if (err) log.error(err)
     })
-    
+
     return res.sendStatus(200)
   } else return res.sendStatus(400)
 })
@@ -57,9 +57,9 @@ const config = require("./config.json");
 const animals = require('random-animals-api');
 const got = require("got")
 const newUsers = new Discord.Collection();
- 
+
 client.on("ready", () => {
-  console.log(`Bot has started, with ${client.users.size} users, in ${client.channels.size} channels of ${client.guilds.size} guilds.`); 
+  console.log(`Bot has started, with ${client.users.size} users, in ${client.channels.size} channels of ${client.guilds.size} guilds.`);
   client.user.setPresence({ game: { name: 'beautiful people', type: "WATCHING" }, status: 'online' })
   // List servers the bot is connected to
     console.log("Servers:")
@@ -69,22 +69,22 @@ client.on("ready", () => {
 });
 
 
- 
+
 client.on("message", async message => {
   console.log(message.author.tag + " sent this: (" + message.content + ") in " + message.guild + "'s channel #" + message.channel.name + "(" + message.channel.id + ")");
   if (message.author.bot) return;
-  
+
   if(message.guild === null){
     client.channels.get("572458414878228486").send(message.author.tag + " said this in a DM to me: \n```\n" + message.content + "\n```");
     console.log(message.author.tag + " said this in a DM to me: \n```\n" + message.content + "\n```");
   };
-  
-  
+
+
   if (message.content.indexOf(config.prefix) !== 0) return;
   const args = message.content.slice(config.prefix.length).trim().split(/ +/g);
   const command = args.shift().toLowerCase();
-  
-  
+
+
   if(command === "help") {
     const embed = new Discord.RichEmbed()
     .setTitle("My Commands")
@@ -94,17 +94,28 @@ client.on("message", async message => {
     .addField(config.prefix + "ping", "See the bot's latency", true)
     .addField(config.prefix + "animals", "See what animals you can get pictures of", true)
     .addField(config.prefix + "meme", "Get yourself a good meme", true)
-    .addField(config.prefix + "restart", "Restart the bot")
+    .addField(config.prefix + "purge", "Delete messages with the first argument as the number of messages to delete", true)
     .setFooter("More Commands coming soon! Contribute at https://github.com/cute-global-cats/kittybot")
     message.channel.send({embed});
   }
-  
+
+  if(command === "purge"){
+    if(!message.member.roles.some(r=>["Support", "Moderator", "Administrator", "Leader"].includes(r.name)) || message.member.hasPermission("ADMINISTRATOR"))
+      return
+    let amountToPurge = parseInt(args[0])
+    if (isNaN(amountToPurge)) { message.channel.send(`${args[0]} is not a number! Try again.`); return }
+    message.delete().catch(O_o=>{});
+    channel.bulkDelete(amountToPurge)
+      .then(messages => console.log(`Bulk deleted ${messages.size} messages`))
+      .catch(console.error);
+  }
+
   if(command === "say") {
     if(config.eval.some(user => user === message.author.id) === true) {
     message.delete().catch(O_o=>{});
     message.channel.startTyping();
     const sayMessage = args.join(" ");
-    message.delete().catch(O_o=>{}); 
+    message.delete().catch(O_o=>{});
     message.channel.send(sayMessage);
     message.channel.stopTyping();
     }
@@ -116,11 +127,7 @@ client.on("message", async message => {
     const m = await message.channel.send("Ping?");
     m.edit(`Pong! :ping_pong: Latency is ${m.createdTimestamp - message.createdTimestamp}ms. API Latency is ${Math.round(client.ping)}ms`);
   }
-  
-  if(command === "restart"){
-    resetBot(message.channel);
-  }
-  
+
   if(command === "cat"){
     animals.cat().then(url => {
     const embed = new Discord.RichEmbed()
@@ -132,7 +139,7 @@ client.on("message", async message => {
     message.channel.send(embed)
     })
   }
-  
+
   if(command === "dog"){
     animals.dog().then(url => {
     const embed = new Discord.RichEmbed()
@@ -144,7 +151,7 @@ client.on("message", async message => {
     message.channel.send(embed)
     })
   }
-  
+
   if(command === "bird"){
     animals.bird().then(url => {
     const embed = new Discord.RichEmbed()
@@ -266,12 +273,12 @@ client.on("message", async message => {
     message.channel.send(embed)
     })
   }
-  
+
   if(command === "animals"){
     message.channel.send("This bot contains pictures for these animals:\n```\ncat, fox, bird, dog, bunny, lizard, owl, tiger, shiba, lion, duck, panda, and penguin\n```")
   }
-  
-  
+
+
   if(command === "verify"){
     if(!message.member.roles.some(r=>["Support", "Moderator", "Administrator", "Leader"].includes(r.name)) || message.member.hasPermission("ADMINISTRATOR"))
       return
@@ -282,7 +289,7 @@ client.on("message", async message => {
     person.addRole(verified).catch(console.error);
     message.channel.send("Successfully verified " + person.user.tag)
   }
-  
+
   if(command === "unverify"){
     if(!message.member.roles.some(r=>["Support", "Moderator", "Administrator", "Leader"].includes(r.name)) || message.member.hasPermission("ADMINISTRATOR"))
       return
@@ -293,7 +300,7 @@ client.on("message", async message => {
     person.removeRole(verified).catch(console.error);
     message.channel.send("Successfully unverified " + person.user.tag)
   }
-  
+
   if(command === "meme"){
     const embed = new Discord.RichEmbed();
     got('https://www.reddit.com/r/dankmemes/random/.json').then(response => {
@@ -314,35 +321,25 @@ client.on("message", async message => {
         console.log('Bot responded with: ' + memeImage);
     }).catch(console.error);
   }
-  
+
   if (command === "eval") {
     if(config.eval.some(user => user === message.author.id) === false)
       return message.reply(":warning: You don't have permission to use that command! :warning:")
     try {
       const code = args.join(" ");
       let evaled = eval(code);
- 
+
       if (typeof evaled !== "string")
         evaled = require("util").inspect(evaled);
- 
+
       message.channel.send(clean(evaled), {code:"xl"});
     } catch (err) {
       message.channel.send(`\`ERROR\` \`\`\`xl\n${clean(err)}\n\`\`\``);
     }
   }
 
-  
-  
 });
 
-
-function resetBot(channel) {
-    // send channel a message that you're resetting bot [optional]
-    channel.send('Restarting...')
-    .then(msg => client.destroy())
-    .then(() => client.login(config.token));
-    channel.send('Bot has been restarted');
-}
 
 function clean(text) {
   if (typeof(text) === "string")
@@ -350,5 +347,5 @@ function clean(text) {
   else
       return text;
 }
- 
+
 client.login(process.env.TOKEN);
