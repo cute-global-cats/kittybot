@@ -57,6 +57,7 @@ const config = require("./config.json");
 const animals = require('random-animals-api');
 const got = require("got")
 const newUsers = new Discord.Collection();
+const prefix = config.prefix
 
 client.on("ready", () => {
   console.log(`Bot has started, with ${client.users.size} users, in ${client.channels.size} channels of ${client.guilds.size} guilds.`);
