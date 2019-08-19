@@ -1,24 +1,30 @@
 // 24/7 hour script
 const http = require('http');
 const express = require('express');
+const session = require('express-session')
 const app = express();
 const cmd = require('node-cmd');
-const crypto = require("crypto");
+const passwordProtected = require('express-password-protect')
 /*global Set, Map*/
 app.use(express.static('public'));
+const passwordconfig = {
+    username: "admin",
+    password: process.env.PASSWORD,
+    maxAge: 60000 // 1 minute
+}
 
 app.get("/", (request, response) => {
   console.log(Date.now() + " Ping Received");
   response.sendFile(__dirname + '/index.html');
 });
+
+app.use(passwordProtected(config))
 app.get('/git', (req, res) => {
   cmd.run("sh git.sh")
   res.sendStatus(200)
 })
+
 app.listen(process.env.PORT);
-setInterval(() => {
-  http.get(`http://${process.env.PROJECT_DOMAIN}.glitch.me/`);
-}, 280000);
 
 
 const Discord = require("discord.js");
