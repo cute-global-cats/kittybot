@@ -18,7 +18,7 @@ app.get("/", (request, response) => {
   response.sendFile(__dirname + '/index.html');
 });
 
-app.use(passwordProtected(config))
+app.use(passwordProtected(passwordconfig))
 app.get('/git', (req, res) => {
   cmd.run("sh git.sh")
   res.sendStatus(200)
