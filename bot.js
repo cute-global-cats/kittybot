@@ -1,54 +1,30 @@
 // 24/7 hour script
 const http = require('http');
 const express = require('express');
+const session = require('express-session')
 const app = express();
 const cmd = require('node-cmd');
-const crypto = require("crypto");
+const passwordProtected = require('express-password-protect')
 /*global Set, Map*/
 app.use(express.static('public'));
+const passwordconfig = {
+    username: "admin",
+    password: process.env.PASSWORD,
+    maxAge: 60000 // 1 minute
+}
 
 app.get("/", (request, response) => {
   console.log(Date.now() + " Ping Received");
   response.sendFile(__dirname + '/index.html');
 });
-app.post('/git', (req, res) => {
-  let hmac = crypto.createHmac('sha1', process.env.SECRET)
-  let sig = 'sha1=' + hmac.update(JSON.stringify(req.body)).digest('hex')
 
-  // If event is "push" and secret matches config.SECRET
-  if (
-    req.headers['x-github-event'] == 'push' &&
-    sig == req.headers['x-hub-signature']
-  ) {
-    cmd.run('chmod 777 ./git.sh') // :/ Fix no perms after updating
-    cmd.get('./git.sh', (err, data) => {
-      if (data) log.info(data)
-      if (err) log.error(err)
-    })
-
-    let commits =
-        req.body.head_commit.message.split('\n').length == 1
-          ? req.body.head_commit.message
-          : req.body.head_commit.message
-            .split('\n')
-            .map((el, i) => (i !== 0 ? '                       ' + el : el))
-            .join('\n')
-    console.log(
-      '\n\n [GIT] Updated with origin/master\n' +
-      `        Latest commit: ${commits}`
-    )
-
-    cmd.get('refresh', err => {
-      if (err) log.error(err)
-    })
-
-    return res.sendStatus(200)
-  } else return res.sendStatus(400)
+app.use(passwordProtected(passwordconfig))
+app.get('/git', (req, res) => {
+  cmd.run("sh git.sh")
+  res.sendStatus(200)
 })
+
 app.listen(process.env.PORT);
-setInterval(() => {
-  http.get(`http://${process.env.PROJECT_DOMAIN}.glitch.me/`);
-}, 280000);
 
 
 const Discord = require("discord.js");
@@ -57,6 +33,7 @@ const config = require("./config.json");
 const animals = require('random-animals-api');
 const got = require("got")
 const newUsers = new Discord.Collection();
+const prefix = config.prefix
 
 client.on("ready", () => {
   console.log(`Bot has started, with ${client.users.size} users, in ${client.channels.size} channels of ${client.guilds.size} guilds.`);
@@ -150,6 +127,54 @@ client.on("message", async message => {
     .setTimestamp();
     message.channel.send(embed)
     })
+  }
+  
+  if (command === "rps") {
+    let rock2 = ['Paper! I win!', 'Scissors! You win!']
+    let rock1 = Math.floor(Math.random() * rock2.length);
+
+    let paper2 = ['Rock! You win!', 'Scissors! I win!']
+    let paper1 = Math.floor(Math.random() * paper2.length);
+
+    let scissors2 = ['Rock! I win', 'Paper! You win!']
+    let scissors1 = Math.floor(Math.random() * scissors2.length);
+
+    let rock = new Discord.RichEmbed()
+      .setAuthor('Rock, Paper, Scissors')
+      .setColor(0x6B5858)
+      .addField('You choose', `${args[0]}`)
+      .addField('I choose', rock2[rock1])
+      .setTimestamp()
+
+    let paper = new Discord.RichEmbed()
+      .setAuthor('Rock, Paper, Scissors')
+      .setColor(0x6B5858)
+      .addField('You choose', `${args[0]}`)
+      .addField('I choose', paper2[paper1])
+      .setTimestamp()
+
+    let scissors = new Discord.RichEmbed()
+      .setAuthor('Rock, Paper, Scissors')
+      .setColor(0x6B5858)
+      .addField('You choose', `${args[0]}`)
+      .addField('I choose', scissors2[scissors1])
+      .setTimestamp()
+
+    if (message.content === prefix + 'rps rock') message.channel.send(rock)
+    if (message.content === prefix + 'rps Rock') message.channel.send(rock)
+
+    if (message.content === prefix + 'rps paper') message.channel.send(paper)
+    if (message.content === prefix + 'rps Paper') message.channel.send(paper)
+
+    if (message.content === prefix + 'rps scissors') message.channel.send(scissors)
+    if (message.content === prefix + 'rps Scissors') message.channel.send(scissors)
+
+
+    if (message.content === prefix + 'rps') message.channel.send(`please pick either rock, paper, or Scissors.`)
+
+
+
+
   }
 
   if(command === "bird"){

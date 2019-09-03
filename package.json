@@ -13,7 +13,9 @@
     "sqlite3": "^4.0.8",
     "random-animals-api": "^1.2.0",
     "got": "^9.6.0",
-    "node-cmd": "^3.0.0"
+    "node-cmd": "^3.0.0",
+    "express-session": "latest",
+    "express-password-protect": "latest"
   },
   "engines": {
     "node": "8.x"

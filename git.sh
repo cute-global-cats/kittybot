@@ -8,3 +8,5 @@ git reset --hard origin/master
 
 # Pull the code
 git pull origin master --force -X theirs
+
+refresh
