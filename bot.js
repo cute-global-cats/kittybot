@@ -1,4 +1,4 @@
-time // 24/7 hour script
+// 24/7 hour script
 const http = require('http');
 const express = require('express');
 const session = require('express-session')
