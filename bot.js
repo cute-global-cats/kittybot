@@ -131,33 +131,39 @@ client.on("message", async message => {
   }
   
   if (command.toLowerCase() === "rps") {
+    let content = message.content.toLowerCase();
     let guess = Math.floor(Math.random() * 2);
-    let rock_text = ['Paper! I win!', 'Scissors! You win!']
-    let paper_text = ['Rock! You win!', 'Scissors! I win!']
-    let scissors_text = ['Rock! I win', 'Paper! You win!']
+    let rock_text = ['Paper! I win!', 'Scissors! You win!'];
+    let paper_text = ['Rock! You win!', 'Scissors! I win!'];
+    let scissors_text = ['Rock! I win', 'Paper! You win!'];
+    let interface = [];
 
     let template_rich_embed = new Discord.RichEmbed()
       .setAuthor('Rock, Paper, Scissors')
       .setColor(0x6B5858)
-      .addField('You choose', `${args[0]}`)
+      .addField('You choose', `${args[0]}`);
 
     let rock = template_rich_embed
       .addField('I choose', rock_text[guess])
-      .setTimestamp()
+      .setTimestamp();
 
     let paper = template_rich_embed
       .addField('I choose', paper_text[guess])
-      .setTimestamp()
+      .setTimestamp();
 
     let scissors = template_rich_embed
       .addField('I choose', scissors_text[guess])
-      .setTimestamp()
+      .setTimestamp();
+    
+    interface[prefix + 'rps rock'] = rock
+    interface[prefix + 'rps paper'] = paper
+    interface[prefix + 'rps scissors'] = scissors
 
-    if (message.content.toLowerCase() === prefix + 'rps rock') message.channel.send(rock)
-    if (message.content.toLowerCase() === prefix + 'rps paper') message.channel.send(paper)
-    if (message.content.toLowerCase() === prefix + 'rps scissors') message.channel.send(scissors)
-
-    if (message.content.toLowerCase() === prefix + 'rps') message.channel.send(`please pick either rock, paper, or Scissors.`)
+    if (content in interface) { 
+      message.channel.send(interface[content]); 
+    } else {
+      message.channel.send(`Please pick either Rock, paper, or Scissors.`);
+    }
 
   }
 
