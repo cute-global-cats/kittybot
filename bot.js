@@ -155,9 +155,9 @@ client.on("message", async message => {
       .addField('I choose', scissors_text[guess])
       .setTimestamp();
     
-    interface[prefix + 'rps rock'] = rock
-    interface[prefix + 'rps paper'] = paper
-    interface[prefix + 'rps scissors'] = scissors
+    interface[prefix + 'rps rock'] = rock;
+    interface[prefix + 'rps paper'] = paper;
+    interface[prefix + 'rps scissors'] = scissors;
 
     if (content in interface) { 
       message.channel.send(interface[content]); 
