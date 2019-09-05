@@ -71,7 +71,6 @@ client.on("message", async message => {
     .addField(config.prefix + "ping", "See the bot's latency", true)
     .addField(config.prefix + "animals", "See what animals you can get pictures of", true)
     .addField(config.prefix + "meme", "Get yourself a good meme", true)
-    .addField(config.prefix + "rps", "Play rock, paper, scissors against the bot! Enter in rock, paper, or scissors as the first argument.", true)
     .addField(config.prefix + "purge", "Delete messages with the first argument as the number of messages to delete", true)
     .setFooter("More Commands coming soon! Contribute at https://github.com/cute-global-cats/kittybot")
     message.channel.send({embed});
@@ -131,39 +130,50 @@ client.on("message", async message => {
   }
   
   if (command === "rps") {
-    let content = message.content.toLowerCase();
-    let guess = Math.floor(Math.random() * 2);
-    let rock_text = ['Paper! I win!', 'Scissors! You win!'];
-    let paper_text = ['Rock! You win!', 'Scissors! I win!'];
-    let scissors_text = ['Rock! I win', 'Paper! You win!'];
-    let interface = [];
+    let rock2 = ['Paper! I win!', 'Scissors! You win!']
+    let rock1 = Math.floor(Math.random() * rock2.length);
 
-    let template_rich_embed = new Discord.RichEmbed()
+    let paper2 = ['Rock! You win!', 'Scissors! I win!']
+    let paper1 = Math.floor(Math.random() * paper2.length);
+
+    let scissors2 = ['Rock! I win', 'Paper! You win!']
+    let scissors1 = Math.floor(Math.random() * scissors2.length);
+
+    let rock = new Discord.RichEmbed()
       .setAuthor('Rock, Paper, Scissors')
       .setColor(0x6B5858)
-      .addField('You choose', `${args[0]}`);
+      .addField('You choose', `${args[0]}`)
+      .addField('I choose', rock2[rock1])
+      .setTimestamp()
 
-    let rock = template_rich_embed
-      .addField('I choose', rock_text[guess])
-      .setTimestamp();
+    let paper = new Discord.RichEmbed()
+      .setAuthor('Rock, Paper, Scissors')
+      .setColor(0x6B5858)
+      .addField('You choose', `${args[0]}`)
+      .addField('I choose', paper2[paper1])
+      .setTimestamp()
 
-    let paper = template_rich_embed
-      .addField('I choose', paper_text[guess])
-      .setTimestamp();
+    let scissors = new Discord.RichEmbed()
+      .setAuthor('Rock, Paper, Scissors')
+      .setColor(0x6B5858)
+      .addField('You choose', `${args[0]}`)
+      .addField('I choose', scissors2[scissors1])
+      .setTimestamp()
 
-    let scissors = template_rich_embed
-      .addField('I choose', scissors_text[guess])
-      .setTimestamp();
-    
-    interface[prefix + 'rps rock'] = rock;
-    interface[prefix + 'rps paper'] = paper;
-    interface[prefix + 'rps scissors'] = scissors;
+    if (message.content === prefix + 'rps rock') message.channel.send(rock)
+    if (message.content === prefix + 'rps Rock') message.channel.send(rock)
 
-    if (content in interface) { 
-      message.channel.send(interface[content]); 
-    } else {
-      message.channel.send(`Please pick either Rock, paper, or Scissors.`);
-    }
+    if (message.content === prefix + 'rps paper') message.channel.send(paper)
+    if (message.content === prefix + 'rps Paper') message.channel.send(paper)
+
+    if (message.content === prefix + 'rps scissors') message.channel.send(scissors)
+    if (message.content === prefix + 'rps Scissors') message.channel.send(scissors)
+
+
+    if (message.content === prefix + 'rps') message.channel.send(`please pick either rock, paper, or Scissors.`)
+
+
+
 
   }
 
@@ -361,6 +371,14 @@ function clean(text) {
     return text.replace(/`/g, "`" + String.fromCharCode(8203)).replace(/@/g, "@" + String.fromCharCode(8203));
   else
       return text;
+}
+
+function log(text) {
+    let pingrole = message.guild.roles.find(role => role.name === "Kittybot Staff");
+    pingrole.setMentionable(true)
+    client.channels.get(config.logs).send(`<@&${pingrole.id}>\n\n>>> ${text}`)
+    pingrole.setMentionable(false)
+    }
 }
 
 client.login(process.env.TOKEN);
