@@ -71,7 +71,7 @@ client.on("message", async message => {
     .addField(config.prefix + "ping", "See the bot's latency", true)
     .addField(config.prefix + "animals", "See what animals you can get pictures of", true)
     .addField(config.prefix + "meme", "Get yourself a good meme", true)
-    .addField(config.prefix + "rps", "Play rock, paper, scissors against the bot! Enter in rock, paper, or scissors as the first argument.", true)
+    .addField(config.prefix + "rps", "Play rock, paper, scissors against the bot! Enter in rock, paper, or scissors as the first argument. (Not case sensitive)", true)
     .addField(config.prefix + "purge", "Delete messages with the first argument as the number of messages to delete", true)
     .setFooter("More Commands coming soon! Contribute at https://github.com/cute-global-cats/kittybot")
     message.channel.send({embed});
