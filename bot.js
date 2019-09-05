@@ -143,15 +143,15 @@ client.on("message", async message => {
       .setColor(0x6B5858)
       .addField('You choose', `${args[0]}`);
 
-    let rock = template_rich_embed
+    let rock = new template_rich_embed
       .addField('I choose', rock_text[guess])
       .setTimestamp();
 
-    let paper = template_rich_embed
+    let paper = new template_rich_embed
       .addField('I choose', paper_text[guess])
       .setTimestamp();
 
-    let scissors = template_rich_embed
+    let scissors = new template_rich_embed
       .addField('I choose', scissors_text[guess])
       .setTimestamp();
     
