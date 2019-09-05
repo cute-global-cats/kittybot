@@ -71,6 +71,7 @@ client.on("message", async message => {
     .addField(config.prefix + "ping", "See the bot's latency", true)
     .addField(config.prefix + "animals", "See what animals you can get pictures of", true)
     .addField(config.prefix + "meme", "Get yourself a good meme", true)
+    .addField(config.prefix + "rps", "Play rock, paper, scissors against the bot! Enter in rock, paper, or scissors as the first argument. (Not case sensitive)", true)
     .addField(config.prefix + "purge", "Delete messages with the first argument as the number of messages to delete", true)
     .setFooter("More Commands coming soon! Contribute at https://github.com/cute-global-cats/kittybot")
     message.channel.send({embed});
@@ -142,15 +143,15 @@ client.on("message", async message => {
       .setColor(0x6B5858)
       .addField('You choose', `${args[0]}`);
 
-    let rock = template_rich_embed
+    let rock = new template_rich_embed
       .addField('I choose', rock_text[guess])
       .setTimestamp();
 
-    let paper = template_rich_embed
+    let paper = new template_rich_embed
       .addField('I choose', paper_text[guess])
       .setTimestamp();
 
-    let scissors = template_rich_embed
+    let scissors = new template_rich_embed
       .addField('I choose', scissors_text[guess])
       .setTimestamp();
     
@@ -161,7 +162,7 @@ client.on("message", async message => {
     if (content in interface) { 
       message.channel.send(interface[content]); 
     } else {
-      message.channel.send(`Please pick either Rock, paper, or Scissors.`);
+      message.channel.send(`Please pick either Rock, Paper, or Scissors.`);
     }
 
   }
