@@ -162,7 +162,7 @@ client.on("message", async message => {
     if (content in interface) { 
       message.channel.send(interface[content]); 
     } else {
-      message.channel.send(`Please pick either Rock, paper, or Scissors.`);
+      message.channel.send(`Please pick either Rock, Paper, or Scissors.`);
     }
 
   }
