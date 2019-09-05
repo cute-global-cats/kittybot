@@ -373,12 +373,4 @@ function clean(text) {
       return text;
 }
 
-function log(text) {
-    let pingrole = message.guild.roles.find(role => role.name === "Kittybot Staff");
-    pingrole.setMentionable(true)
-    client.channels.get(config.logs).send(`<@&${pingrole.id}>\n\n>>> ${text}`)
-    pingrole.setMentionable(false)
-    }
-}
-
 client.login(process.env.TOKEN);
