@@ -77,7 +77,7 @@ client.on("message", async message => {
     message.channel.send({embed});
   }
 
-  if(command.toLowerCase() === "purge"){
+  if(command === "purge"){
     if(!message.member.roles.some(r=>["Support", "Moderator", "Administrator", "Leader"].includes(r.name)) || message.member.hasPermission("ADMINISTRATOR"))
       return
     let amountToPurge = parseInt(args[0])
@@ -88,7 +88,7 @@ client.on("message", async message => {
       .catch(console.error);
   }
 
-  if(command.toLowerCase() === "say") {
+  if(command === "say") {
     if(config.eval.some(user => user === message.author.id) === true) {
     message.delete().catch(O_o=>{});
     message.channel.startTyping();
@@ -98,7 +98,7 @@ client.on("message", async message => {
     message.channel.stopTyping();
     }
   }
-  if(command.toLowerCase() === "ping") {
+  if(command === "ping") {
     // Calculates ping between sending a message and editing it, giving a nice round-trip latency.
     // The second ping is an average latency between the bot and the websocket server (one-way, not round-trip)
     message.delete().catch(O_o=>{});
@@ -106,11 +106,11 @@ client.on("message", async message => {
     m.edit(`Pong! :ping_pong: Latency is ${m.createdTimestamp - message.createdTimestamp}ms. API Latency is ${Math.round(client.ping)}ms`);
   }
 
-  if(command.toLowerCase() === "cat"){
+  if(command === "cat"){
     animals.cat().then(url => {
     const embed = new Discord.RichEmbed()
     .setAuthor(message.author.username , message.author.avatarURL)
-    .setDescription("Here's your " + command.toLowerCase() + " picture!")
+    .setDescription("Here's your " + command + " picture!")
     .setColor(16711680)
     .setImage(url)
     .setTimestamp();
@@ -118,11 +118,11 @@ client.on("message", async message => {
     })
   }
 
-  if(command.toLowerCase() === "dog"){
+  if(command === "dog"){
     animals.dog().then(url => {
     const embed = new Discord.RichEmbed()
     .setAuthor(message.author.username , message.author.avatarURL)
-    .setDescription("Here's your " + command.toLowerCase() + " picture!")
+    .setDescription("Here's your " + command + " picture!")
     .setColor(16711680)
     .setImage(url)
     .setTimestamp();
@@ -130,7 +130,7 @@ client.on("message", async message => {
     })
   }
   
-  if (command.toLowerCase() === "rps") {
+  if (command === "rps") {
     let content = message.content.toLowerCase();
     let guess = Math.floor(Math.random() * 2);
     let rock_text = ['Paper! I win!', 'Scissors! You win!'];
@@ -167,121 +167,121 @@ client.on("message", async message => {
 
   }
 
-  if(command.toLowerCase() === "bird"){
+  if(command === "bird"){
     animals.bird().then(url => {
     const embed = new Discord.RichEmbed()
     .setAuthor(message.author.username , message.author.avatarURL)
-    .setDescription("Here's your " + command.toLowerCase() + " picture!")
+    .setDescription("Here's your " + command + " picture!")
     .setColor(16711680)
     .setImage(url)
     .setTimestamp();
     message.channel.send(embed)
     })
   }
-  if(command.toLowerCase() === "fox"){
+  if(command === "fox"){
     animals.fox().then(url => {
     const embed = new Discord.RichEmbed()
     .setAuthor(message.author.username , message.author.avatarURL)
-    .setDescription("Here's your " + command.toLowerCase() + " picture!")
+    .setDescription("Here's your " + command + " picture!")
     .setColor(16711680)
     .setImage(url)
     .setTimestamp();
     message.channel.send(embed)
     })
   }
-  if(command.toLowerCase() === "bunny"){
+  if(command === "bunny"){
     animals.bunny().then(url => {
     const embed = new Discord.RichEmbed()
     .setAuthor(message.author.username , message.author.avatarURL)
-    .setDescription("Here's your " + command.toLowerCase() + " picture!")
+    .setDescription("Here's your " + command + " picture!")
     .setColor(16711680)
     .setImage(url)
     .setTimestamp();
     message.channel.send(embed)
     })
   }
-  if(command.toLowerCase() === "lizard"){
+  if(command === "lizard"){
     animals.lizard().then(url => {
     const embed = new Discord.RichEmbed()
     .setAuthor(message.author.username , message.author.avatarURL)
-    .setDescription("Here's your " + command.toLowerCase() + " picture!")
+    .setDescription("Here's your " + command + " picture!")
     .setColor(16711680)
     .setImage(url)
     .setTimestamp();
     message.channel.send(embed)
     })
   }
-  if(command.toLowerCase() === "owl"){
+  if(command === "owl"){
     animals.owl().then(url => {
     const embed = new Discord.RichEmbed()
     .setAuthor(message.author.username , message.author.avatarURL)
-    .setDescription("Here's your " + command.toLowerCase() + " picture!")
+    .setDescription("Here's your " + command + " picture!")
     .setColor(16711680)
     .setImage(url)
     .setTimestamp();
     message.channel.send(embed)
     })
   }
-  if(command.toLowerCase() === "tiger"){
+  if(command === "tiger"){
     animals.tiger().then(url => {
     const embed = new Discord.RichEmbed()
     .setAuthor(message.author.username , message.author.avatarURL)
-    .setDescription("Here's your " + command.toLowerCase() + " picture!")
+    .setDescription("Here's your " + command + " picture!")
     .setColor(16711680)
     .setImage(url)
     .setTimestamp();
     message.channel.send(embed)
     })
   }
-  if(command.toLowerCase() === "shiba"){
+  if(command === "shiba"){
     animals.shiba().then(url => {
     const embed = new Discord.RichEmbed()
     .setAuthor(message.author.username , message.author.avatarURL)
-    .setDescription("Here's your " + command.toLowerCase() + " picture!")
+    .setDescription("Here's your " + command + " picture!")
     .setColor(16711680)
     .setImage(url)
     .setTimestamp();
     message.channel.send(embed)
     })
   }
-  if(command.toLowerCase() === "lion"){
+  if(command === "lion"){
     animals.lion().then(url => {
     const embed = new Discord.RichEmbed()
     .setAuthor(message.author.username , message.author.avatarURL)
-    .setDescription("Here's your " + command.toLowerCase() + " picture!")
+    .setDescription("Here's your " + command + " picture!")
     .setColor(16711680)
     .setImage(url)
     .setTimestamp();
     message.channel.send(embed)
     })
   }
-  if(command.toLowerCase() === "duck"){
+  if(command === "duck"){
     animals.duck().then(url => {
     const embed = new Discord.RichEmbed()
     .setAuthor(message.author.username , message.author.avatarURL)
-    .setDescription("Here's your " + command.toLowerCase() + " picture!")
+    .setDescription("Here's your " + command + " picture!")
     .setColor(16711680)
     .setImage(url)
     .setTimestamp();
     message.channel.send(embed)
     })
   }
-  if(command.toLowerCase() === "panda"){
+  if(command === "panda"){
     animals.panda().then(url => {
     const embed = new Discord.RichEmbed()
     .setAuthor(message.author.username , message.author.avatarURL)
-    .setDescription("Here's your " + command.toLowerCase() + " picture!")
+    .setDescription("Here's your " + command + " picture!")
     .setColor(16711680)
     .setImage(url)
     .setTimestamp();
     message.channel.send(embed)
     })
   }
-  if(command.toLowerCase() === "penguin"){
+  if(command === "penguin"){
     animals.penguin().then(url => {
     const embed = new Discord.RichEmbed()
     .setAuthor(message.author.username , message.author.avatarURL)
-    .setDescription("Here's your " + command.toLowerCase() + " picture!")
+    .setDescription("Here's your " + command + " picture!")
     .setColor(16711680)
     .setImage(url)
     .setTimestamp();
@@ -289,12 +289,12 @@ client.on("message", async message => {
     })
   }
 
-  if(command.toLowerCase() === "animals"){
+  if(command === "animals"){
     message.channel.send("This bot contains pictures for these animals:\n```\ncat, fox, bird, dog, bunny, lizard, owl, tiger, shiba, lion, duck, panda, and penguin\n```")
   }
 
 
-  if(command.toLowerCase() === "verify"){
+  if(command === "verify"){
     if(!message.member.roles.some(r=>["Support", "Moderator", "Administrator", "Leader"].includes(r.name)) || message.member.hasPermission("ADMINISTRATOR"))
       return
     let verified = message.guild.roles.find(role => role.name === "Verified");
@@ -305,7 +305,7 @@ client.on("message", async message => {
     message.channel.send("Successfully verified " + person.user.tag)
   }
 
-  if(command.toLowerCase() === "unverify"){
+  if(command === "unverify"){
     if(!message.member.roles.some(r=>["Support", "Moderator", "Administrator", "Leader"].includes(r.name)) || message.member.hasPermission("ADMINISTRATOR"))
       return
     let verified = message.guild.roles.find(role => role.name === "Verified");
@@ -316,7 +316,7 @@ client.on("message", async message => {
     message.channel.send("Successfully unverified " + person.user.tag)
   }
 
-  if(command.toLowerCase() === "meme"){
+  if(command === "meme"){
     const embed = new Discord.RichEmbed();
     got('https://www.reddit.com/r/dankmemes/random/.json').then(response => {
         let content = JSON.parse(response.body);
@@ -337,7 +337,7 @@ client.on("message", async message => {
     }).catch(console.error);
   }
 
-  if (command.toLowerCase() === "eval") {
+  if (command === "eval") {
     if(config.eval.some(user => user === message.author.id) === false)
       return message.reply(":warning: You don't have permission to use that command! :warning:")
     try {
