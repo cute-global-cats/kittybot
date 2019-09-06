@@ -52,11 +52,13 @@ client.on("message", async message => {
   if (message.author.bot) return;
 
   if(message.guild === null){
-    client.channels.get("572458414878228486").send(message.author.tag + " said this in a DM to me: \n```\n" + message.content + "\n```");
+    botlog(message.author.tag + " said this in a DM to me: \n```\n" + message.content + "\n```");
     console.log(message.author.tag + " said this in a DM to me: \n```\n" + message.content + "\n```");
   };
 
 
+    
+  
   if (message.content.indexOf(config.prefix) !== 0) return;
   const args = message.content.slice(config.prefix.length).trim().split(/ +/g);
   const command = args.shift().toLowerCase();
@@ -95,8 +97,10 @@ client.on("message", async message => {
     message.delete().catch(O_o=>{});
     message.channel.send(sayMessage);
     message.channel.stopTyping();
+    botlog(`${message.author.tag} made me say ${saymessage}
     }
   }
+    
   if(command === "ping") {
     // Calculates ping between sending a message and editing it, giving a nice round-trip latency.
     // The second ping is an average latency between the bot and the websocket server (one-way, not round-trip)
@@ -373,7 +377,7 @@ function clean(text) {
       return text;
 }
 
-function log(text) {
+function botlog(text) {
     client.channels.get(config.logs).send(`<@&${pingrole.id}>\n\n>>> ${text}`)
 }
 
