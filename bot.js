@@ -132,29 +132,33 @@ client.on("message", async message => {
   
   if (command === "rps") {
     let content = message.content.toLowerCase();
-    let guess = Math.floor(Math.random() * 2);
-    let rock_text = ['Paper! I win!', 'Scissors! You win!'];
-    let paper_text = ['Rock! You win!', 'Scissors! I win!'];
-    let scissors_text = ['Rock! I win', 'Paper! You win!'];
+    let guess = Math.floor(Math.random() * 3);
+    let rock_text = ['Paper! I win!', 'Scissors! You win!', 'Rock! We tie!'];
+    let paper_text = ['Rock! You win!', 'Scissors! I win!', 'Paper! We tie!'];
+    let scissors_text = ['Rock! I win', 'Paper! You win!', 'Scissors! We tie!'];
     let interface = [];
 
-    let template_rich_embed = new Discord.RichEmbed()
+    let rock = new Discord.RichEmbed()
       .setAuthor('Rock, Paper, Scissors')
       .setColor(0x6B5858)
-      .addField('You choose', `${args[0]}`);
-
-    let rock = new Discord.RichEmbed(template_rich_embed)
+      .addField('You choose', `${args[0]}`)
       .addField('I choose', rock_text[guess])
       .setTimestamp();
 
-    let paper = new Discord.RichEmbed(template_rich_embed)
+    let paper = new Discord.RichEmbed()
+      .setAuthor('Rock, Paper, Scissors')
+      .setColor(0x6B5858)
+      .addField('You choose', `${args[0]}`)
       .addField('I choose', paper_text[guess])
       .setTimestamp();
 
-    let scissors = new Discord.RichEmbed(template_rich_embed)
+    let scissors = new Discord.RichEmbed()
+      .setAuthor('Rock, Paper, Scissors')
+      .setColor(0x6B5858)
+      .addField('You choose', `${args[0]}`)
       .addField('I choose', scissors_text[guess])
       .setTimestamp();
-    
+
     interface[prefix + 'rps rock'] = rock;
     interface[prefix + 'rps paper'] = paper;
     interface[prefix + 'rps scissors'] = scissors;
