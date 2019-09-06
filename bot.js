@@ -133,10 +133,10 @@ client.on("message", async message => {
   if (command === "unbpurge") {
     if(!message.member.roles.some(r=>["Support", "Moderator", "Administrator", "Leader"].includes(r.name)) || message.member.hasPermission("ADMINISTRATOR"))
       return
-    channel.fetchMessages({ limit: 100 })
+    message.channel.fetchMessages({ limit: 100 })
       .then(fetchedMessages => {
         const messagesToDelete = fetchedMessages.filter(msg => !(msg.author.id === '413728456942288896' && msg.content.includes(':epic_e::epic_p::epic_i::epic_c:')));
-        return channel.bulkDelete(messagesToDelete, true);
+        return message.channel.bulkDelete(messagesToDelete, true);
       })
       //.then(deletedMessages => channel.send(`Deleted **${deletedMessages.size}** message${deletedMessages.size !== 1 ? 's' : ''}.`))
       .catch(console.error);
@@ -145,10 +145,10 @@ client.on("message", async message => {
   if (command === "cfpurge") {
     if(!message.member.roles.some(r=>["Support", "Moderator", "Administrator", "Leader"].includes(r.name)) || message.member.hasPermission("ADMINISTRATOR"))
       return
-    channel.fetchMessages({ limit: 100 })
+    message.channel.fetchMessages({ limit: 100 })
       .then(fetchedMessages => {
         const messagesToDelete = fetchedMessages.filter(msg => !(msg.author.id === '413728456942288896' && msg.content.includes('Congratulations! You **WON**')));
-        return channel.bulkDelete(messagesToDelete, true);
+        message.channel.bulkDelete(messagesToDelete, true);
       })
       //.then(deletedMessages => channel.send(`Deleted **${deletedMessages.size}** message${deletedMessages.size !== 1 ? 's' : ''}.`))
       .catch(console.error);
