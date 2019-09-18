@@ -57,9 +57,9 @@ client.on("message", async message => {
   };
     
   if(message.channel.id === config.ids.cgc.announcements){
-      client.channels.get(configs.ids.owo.cgcannounce).send(message.content)
-      client.channels.get(configs.ids.uwu.cgcannounce).send(message.content)
-      client.channels.get(configs.ids.fbi.cgcannounce).send(message.content)
+      client.channels.get(config.ids.owo.cgcannounce).send(message.content)
+      client.channels.get(config.ids.uwu.cgcannounce).send(message.content)
+      client.channels.get(config.ids.fbi.cgcannounce).send(message.content)
   }
 
 
