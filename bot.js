@@ -55,6 +55,12 @@ client.on("message", async message => {
     client.channels.get("572458414878228486").send(message.author.tag + " said this in a DM to me: \n```\n" + message.content + "\n```");
     console.log(message.author.tag + " said this in a DM to me: \n```\n" + message.content + "\n```");
   };
+    
+  if(message.channel.id === config.ids.cgc.announcements){
+      client.channels.get(configs.ids.owo.cgcannounce).send(message.content)
+      client.channels.get(configs.ids.uwu.cgcannounce).send(message.content)
+      client.channels.get(configs.ids.fbi.cgcannounce).send(message.content)
+  }
 
 
   if (message.content.indexOf(config.prefix) !== 0) return;
