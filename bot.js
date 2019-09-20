@@ -347,7 +347,7 @@ client.on("message", async message => {
     message.channel.send("Successfully unverified " + person.user.tag)
   }
     
-    if(command === "massannounce" || message.guild.id === config.ids.cgc.server){
+    if(command === "massannounce" && message.guild.id === config.ids.cgc.server){
       if(!message.member.roles.some(r=>["Administrator", "Leader"].includes(r.name)) || message.member.hasPermission("ADMINISTRATOR"))
         return
       client.channels.get(config.ids.cgc.announcements).send(sendmessage)
