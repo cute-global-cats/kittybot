@@ -55,6 +55,8 @@ client.on("message", async message => {
     client.channels.get("572458414878228486").send(message.author.tag + " said this in a DM to me: \n```\n" + message.content + "\n```");
     console.log(message.author.tag + " said this in a DM to me: \n```\n" + message.content + "\n```");
   };
+    
+  
 
 
   if (message.content.indexOf(config.prefix) !== 0) return;
@@ -343,6 +345,15 @@ client.on("message", async message => {
       return message.reply("You must mention a user or provide their id!")
     person.removeRole(verified).catch(console.error);
     message.channel.send("Successfully unverified " + person.user.tag)
+  }
+    
+    if(command === "massannounce" && message.guild.id === config.ids.cgc.server){
+      if(!message.member.roles.some(r=>["Administrator", "Leader"].includes(r.name)) || message.member.hasPermission("ADMINISTRATOR"))
+        return
+      client.channels.get(config.ids.cgc.announcements).send(sendmessage)
+      client.channels.get(config.ids.owo.cgcannounce).send(sendmessage)
+      client.channels.get(config.ids.uwu.cgcannounce).send(sendmessage)
+      client.channels.get(config.ids.fbi.cgcannounce).send(sendmessage)
   }
 
   if(command === "meme"){
