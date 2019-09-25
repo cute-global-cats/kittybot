@@ -346,8 +346,30 @@ client.on("message", async message => {
     person.removeRole(verified).catch(console.error);
     message.channel.send("Successfully unverified " + person.user.tag)
   }
+
+  if(command === "gaccess"){
+    if(!message.member.roles.some(r=>["Support", "Moderator", "Administrator", "Leader"].includes(r.name)) || message.member.hasPermission("ADMINISTRATOR"))
+      return
+    let verified = message.guild.roles.find(role => role.name === "Giveaway Access");
+    let person = message.mentions.members.first() || message.guild.members.get(args[0]);
+    if(!person)
+      return message.reply("You must mention a user or provide their id!")
+    person.addRole(verified).catch(console.error);
+    message.channel.send("Successfully gave " + person.user.tag + " giveaway access")
+  }
+
+  if(command === "ungaccess"){
+    if(!message.member.roles.some(r=>["Support", "Moderator", "Administrator", "Leader"].includes(r.name)) || message.member.hasPermission("ADMINISTRATOR"))
+      return
+    let verified = message.guild.roles.find(role => role.name === "Giveaway Access");
+    let person = message.mentions.members.first() || message.guild.members.get(args[0]);
+    if(!person)
+      return message.reply("You must mention a user or provide their id!")
+    person.removeRole(verified).catch(console.error);
+    message.channel.send("Successfully removed giveaway access from " + person.user.tag)
+  }
     
-    if(command === "massannounce" && message.guild.id === config.ids.cgc.server){
+  if(command === "massannounce" && message.guild.id === config.ids.cgc.server){
       if(!message.member.roles.some(r=>["Administrator", "Leader"].includes(r.name)) || message.member.hasPermission("ADMINISTRATOR"))
         return
       client.channels.get(config.ids.cgc.announcements).send(sendmessage)
