@@ -326,56 +326,71 @@ client.on("message", async message => {
 
 
   if(command === "verify"){
-    if(!message.member.roles.some(r=>["Support", "Moderator", "Administrator", "Leader"].includes(r.name)) || message.member.hasPermission("ADMINISTRATOR"))
-      return
+    if(message.member.roles.some(r=>["Support", "Moderator", "Administrator", "Leader"].includes(r.name)) || message.member.hasPermission("ADMINISTRATOR")){
     let verified = message.guild.roles.find(role => role.name === "Verified");
     let person = message.mentions.members.first() || message.guild.members.get(args[0]);
     if(!person)
       return message.reply("You must mention a user or provide their id!")
     person.addRole(verified).catch(console.error);
     message.channel.send("Successfully verified " + person.user.tag)
+    }
   }
 
   if(command === "unverify"){
-    if(!message.member.roles.some(r=>["Support", "Moderator", "Administrator", "Leader"].includes(r.name)) || message.member.hasPermission("ADMINISTRATOR"))
-      return
+    if(message.member.roles.some(r=>["Support", "Moderator", "Administrator", "Leader"].includes(r.name)) || message.member.hasPermission("ADMINISTRATOR")){
     let verified = message.guild.roles.find(role => role.name === "Verified");
     let person = message.mentions.members.first() || message.guild.members.get(args[0]);
     if(!person)
       return message.reply("You must mention a user or provide their id!")
     person.removeRole(verified).catch(console.error);
     message.channel.send("Successfully unverified " + person.user.tag)
+    }
   }
 
   if(command === "gaccess"){
-    if(!message.member.roles.some(r=>["Support", "Moderator", "Administrator", "Leader"].includes(r.name)) || message.member.hasPermission("ADMINISTRATOR"))
-      return
-    let verified = message.guild.roles.find(role => role.name === "Giveaway Access");
+    if(message.member.roles.some(r=>["Support", "Moderator", "Administrator", "Leader"].includes(r.name)) || message.member.hasPermission("ADMINISTRATOR")){
+    let gaccess = message.guild.roles.find(role => role.name === "Giveaway Access");
+    let gban = message.guild.roles.find(role => role.name === "Giveaway Ban");
     let person = message.mentions.members.first() || message.guild.members.get(args[0]);
     if(!person)
       return message.reply("You must mention a user or provide their id!")
-    person.addRole(verified).catch(console.error);
+    person.addRole(gaccess).catch(console.error);
+    person.removeRole(gban).catch(console.error);
     message.channel.send("Successfully gave " + person.user.tag + " giveaway access")
   }
 
   if(command === "ungaccess"){
-    if(!message.member.roles.some(r=>["Support", "Moderator", "Administrator", "Leader"].includes(r.name)) || message.member.hasPermission("ADMINISTRATOR"))
-      return
-    let verified = message.guild.roles.find(role => role.name === "Giveaway Access");
+    if(message.member.roles.some(r=>["Support", "Moderator", "Administrator", "Leader"].includes(r.name)) || message.member.hasPermission("ADMINISTRATOR")){
+    let gaccess = message.guild.roles.find(role => role.name === "Giveaway Access");
+    let gban = message.guild.roles.find(role => role.name === "Giveaway Ban");
     let person = message.mentions.members.first() || message.guild.members.get(args[0]);
     if(!person)
       return message.reply("You must mention a user or provide their id!")
-    person.removeRole(verified).catch(console.error);
+    person.removeRole(gaccess).catch(console.error);
     message.channel.send("Successfully removed giveaway access from " + person.user.tag)
+    }
+  }
+      
+  if(command === "gban"){
+    if(message.member.roles.some(r=>["Administrator", "Leader"].includes(r.name)) || message.member.hasPermission("ADMINISTRATOR")){
+    let gaccess = message.guild.roles.find(role => role.name === "Giveaway Access");
+    let gban = message.guild.roles.find(role => role.name === "Giveaway Ban");
+    let person = message.mentions.members.first() || message.guild.members.get(args[0]);
+    if(!person)
+      return message.reply("You must mention a user or provide their id!")
+    person.removeRole(gaccess).catch(console.error);
+    person.addRole(gban).catch(console.error);
+    message.channel.send("Successfully removed giveaway access from " + person.user.tag)
+    }
   }
     
   if(command === "massannounce" && message.guild.id === config.ids.cgc.server){
-      if(!message.member.roles.some(r=>["Administrator", "Leader"].includes(r.name)) || message.member.hasPermission("ADMINISTRATOR"))
-        return
+      if(message.member.roles.some(r=>["Administrator", "Leader"].includes(r.name)) || message.member.hasPermission("ADMINISTRATOR")){
       client.channels.get(config.ids.cgc.announcements).send(sendmessage)
       client.channels.get(config.ids.owo.cgcannounce).send(sendmessage)
       client.channels.get(config.ids.uwu.cgcannounce).send(sendmessage)
       client.channels.get(config.ids.fbi.cgcannounce).send(sendmessage)
+      }
   }
 
   if(command === "meme"){
