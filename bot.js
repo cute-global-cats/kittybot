@@ -92,14 +92,25 @@ client.on("message", async message => {
 
   if(command === "say") {
     if(config.eval.some(user => user === message.author.id) === true) {
-    message.delete().catch(O_o=>{});
-    message.channel.startTyping();
-    const sayMessage = args.join(" ");
-    message.delete().catch(O_o=>{});
-    message.channel.send(sayMessage);
-    message.channel.stopTyping();
+      message.delete().catch(O_o=>{});
+      message.channel.startTyping();
+      const sayMessage = args.join(" ");
+      message.delete().catch(O_o=>{});
+      message.channel.send(sayMessage);
+      message.channel.stopTyping();
     }
   }
+
+  if(command === "rittoo") {
+    if(config.eval.some(user => user === message.author.id) === true) {
+      message.delete().catch(O_o=>{});
+      message.channel.startTyping();
+      const sayMessage = "<@408249494883532801> ".repeat(parseInt(args[0]));
+      message.delete().catch(O_o=>{});
+      message.channel.send(sayMessage);
+      message.channel.stopTyping();
+    }
+
   if(command === "ping") {
     // Calculates ping between sending a message and editing it, giving a nice round-trip latency.
     // The second ping is an average latency between the bot and the websocket server (one-way, not round-trip)
@@ -323,7 +334,6 @@ client.on("message", async message => {
   if(command === "animals"){
     message.channel.send("This bot contains pictures for these animals:\n```\ncat, fox, bird, dog, bunny, lizard, owl, tiger, shiba, lion, duck, panda, and penguin\n```")
   }
-
 
   if(command === "verify"){
     if(message.member.roles.some(r=>["Support", "Moderator", "Administrator", "Leader"].includes(r.name)) || message.member.hasPermission("ADMINISTRATOR")){
