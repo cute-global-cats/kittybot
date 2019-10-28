@@ -110,6 +110,7 @@ client.on("message", async message => {
       message.channel.send(sayMessage);
       message.channel.stopTyping();
     }
+  }
 
   if(command === "ping") {
     // Calculates ping between sending a message and editing it, giving a nice round-trip latency.
