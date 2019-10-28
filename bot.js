@@ -368,6 +368,7 @@ client.on("message", async message => {
     person.addRole(gaccess).catch(console.error);
     person.removeRole(gban).catch(console.error);
     message.channel.send("Successfully gave " + person.user.tag + " giveaway access")
+    }
   }
 
   if(command === "ungaccess"){
