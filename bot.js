@@ -57,8 +57,8 @@ client.on("message", async message => {
   };
     
   if(message.channel.name === "suggestions" || message.guild.id === "643269184998080551"){
-    message.react("643252274486837258")
-    message.react("643252274503745567")
+    await message.react("643252274486837258")
+    await message.react("643252274503745567")
   }
 
 
