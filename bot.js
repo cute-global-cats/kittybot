@@ -41,7 +41,7 @@ client.on("ready", () => {
   // List servers the bot is connected to
     console.log("Servers:")
     client.guilds.forEach((guild) => {
-        console.log(" - " + guild.name)
+        console.log(` - ${guild.name} (${guild.id})`)
     })
 });
 
@@ -56,7 +56,10 @@ client.on("message", async message => {
     console.log(message.author.tag + " said this in a DM to me: \n```\n" + message.content + "\n```");
   };
     
-  
+  if(message.channel.name === "suggestions" || message.guild.id === "643269184998080551"){
+    message.react("643252274486837258")
+    message.react("643252274503745567")
+  }
 
 
   if (message.content.indexOf(config.prefix) !== 0) return;
@@ -450,6 +453,15 @@ function clean(text) {
     return text.replace(/`/g, "`" + String.fromCharCode(8203)).replace(/@/g, "@" + String.fromCharCode(8203));
   else
       return text;
+}
+
+async function replyWithInvite(channelid) {
+  let invite = await client.channels.get(channelid).createInvite({
+    maxAge: 86400,
+    maxUses: 1
+  }).catch(console.log);
+
+  return invite
 }
 
 client.login(process.env.TOKEN);
